@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/style.css">
+    <link rel="stylesheet" href="static/wish.css">
+    <script src="static/aniamtion.js"></script>
+    <title>Document</title>
+</head>
+<body>
+
+  <div class="main">
+  <div class="heading">
+    <h1>From the Family</h1>
+  </div>
+
+  <div class="main-container">
+    <div class="slideshow-container">
+
+        <div class="mySlides">
+          <q>You've always been my personal superhero. Thank you for all the lessons you've taught me over the years. Happy birthday, daddy!</q>
+          <p class="author">- Sai</p>
+          <div class="img-container">
+            <img src="static/dad_me1.jpg">
+            <img src="static/dad_me2.jpg">
+            <img src="static/dad_me3.jpg">
+          </div>
+        </div>
+        
+        <div class="mySlides">
+          <q>Thank you for paving the way, making me patient and brave. Mostly, thank you for always being a safe place to land. Happy birthday, Dad</q>
+          <p class="author">- Teja</p>
+          <div class="img-container">
+            <img src="static/dad_bro1.jpg">
+            <img src="static/dad_bro2.jpg">
+            <img src="static/dad_bro3.jpg">
+          </div>
+        </div>
+        
+        <div class="mySlides">
+          <q>Wishing you a day of happiness and joy! Happy birthday !</q>
+          <p class="author">- Siri</p>
+          <div class="img-container">
+            <img src="static/dad_mom1.jpg">
+            <img src="static/dad_mom2.jpg">
+            <img src="static/dad_mom3.jpg">
+          </div>
+        </div>
+        
+        <a class="prev" onclick="plusSlides(-1)">❮</a>
+        <a class="next" onclick="plusSlides(1)">❯</a>
+        
+    </div>
+
+    
+        
+      <div class="dot-container">
+          <span class="dot" onclick="currentSlide(1)"></span> 
+          <span class="dot" onclick="currentSlide(2)"></span> 
+          <span class="dot" onclick="currentSlide(3)"></span> 
+      </div>
+    </div>
+
+
+  
+    <div class="popup-image">
+      <span>&times;</span>
+      <img src="static/Picture.png" alt="">
+    </div>
+  <div class="button-div">
+    <button onclick="window.location.href = '/'" class="back-button">Back</button>
+  </div>
+</div>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const popupImageContainer = document.querySelector('.popup-image');
+    const popupImage = popupImageContainer.querySelector('img');
+    const closeButton = popupImageContainer.querySelector('span');
+
+    console.log('Popup image container:', popupImageContainer);
+    console.log('Popup image:', popupImage);
+    console.log('Close button:', closeButton);
+
+    // Function to display the popup image
+    const showPopup = (src) => {
+      console.log('Image source:', src);
+      popupImage.src = src;
+      popupImageContainer.style.display = 'flex';
+    };
+
+    // Function to attach click event to images
+    const attachImageClickEvents = () => {
+      document.querySelectorAll('.img-container img').forEach(image => {
+        console.log('Attaching click event to image:', image.src);
+        image.onclick = () => showPopup(image.getAttribute('src'));
+      });
+    };
+
+    // Attach click events to all images initially
+    attachImageClickEvents();
+
+    // Close the popup when the close button is clicked
+    closeButton.onclick = () => {
+      console.log('Close button clicked');
+      popupImageContainer.style.display = 'none';
+    };
+
+    // Close the popup when the image is clicked
+    popupImage.onclick = () => {
+      console.log('Popup image clicked');
+      popupImageContainer.style.display = 'none';
+    };
+
+    // Optional: Close the popup when clicking outside the image
+    popupImageContainer.onclick = (e) => {
+      if (e.target === popupImageContainer) {
+        console.log('Popup container clicked');
+        popupImageContainer.style.display = 'none';
+      }
+    };
+
+    // Slide functionality
+    let slideIndex = 1;
+    showSlides(slideIndex);
+
+    function plusSlides(n) {
+      showSlides(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+      showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+      let i;
+      let slides = document.getElementsByClassName("mySlides");
+      let dots = document.getElementsByClassName("dot");
+      if (n > slides.length) {slideIndex = 1}
+      if (n < 1) {slideIndex = slides.length}
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+      for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+      }
+      slides[slideIndex-1].style.display = "block";
+      dots[slideIndex-1].className += " active";
+
+      // Attach click events to images in the current slide
+      attachImageClickEvents();
+    }
+
+    // Attach these functions to window for use in inline HTML
+    window.plusSlides = plusSlides;
+    window.currentSlide = currentSlide;
+  });
+</script>
+ 
+</body>
+</html>
